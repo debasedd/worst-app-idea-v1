@@ -36,6 +36,10 @@ def main() -> None:
     encoded = LINE.encode("utf-8")
     assert 1 <= len(LINE) <= 240, "entry must be 1-240 characters"
     assert LINE.strip() == LINE and "\n" not in LINE
+    # One sentence, pitched as one idea: exactly one terminal period,
+    # no abbreviation dots smuggled in, no double spaces.
+    assert LINE.count(".") == 1 and LINE.endswith("."), "entry must be one sentence"
+    assert "  " not in LINE
     out_path = os.environ.get("ENTRY_OUTPUT", "/output/entry.txt")
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     # Plain write: the grader reads /output/entry.txt as another user,
